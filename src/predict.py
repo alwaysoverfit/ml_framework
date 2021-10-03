@@ -4,6 +4,7 @@ from sklearn import preprocessing
 from sklearn import metrics
 import os
 import joblib
+import numpy as np
 
 from . import dispatcher
 TRAINING_DATA = os.environ.get("TRAINING_DATA")
@@ -43,4 +44,5 @@ def predict():
     
 
 if __name__ == "__main__":
-    predict()
+    predictions = predict()
+    print(predictions.head())
