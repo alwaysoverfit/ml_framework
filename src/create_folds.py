@@ -1,5 +1,5 @@
 import pandas as pd 
-import sklearn import model_selection
+from sklearn import model_selection
 
 if __name__ == "__main__":
     df = pd.read_csv("input/train.csv")
@@ -7,9 +7,13 @@ if __name__ == "__main__":
     
     df.sample(frac=1).reset_index(drop=True)
 
-    kf = model_selection.StratifiedKFold(n_splits=5, *, shuffle=False, random_state=42)
+    kf = model_selection.StratifiedKFold(n_splits=5)
 
     for fold, (train_idx, val_idx) in enumerate(kf.split(X=df.drop(columns='target'), y=df.target.values)):
         print(len(train_idx), len(val_idx))
+        df.loc[val_idx, 'kfold'] = fold
+
+    df.to_csv("input/train_folds.csv", index=False)
+    
 
 
